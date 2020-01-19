@@ -11,7 +11,7 @@ export default class SearchBar extends React.PureComponent {
   render() {
     return (
       <div>
-
+        <h1>This is the search bar</h1>
       </div>
     );
   }

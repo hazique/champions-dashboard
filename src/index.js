@@ -11,21 +11,24 @@ import Notfound from './components/not-found/not-found';
 import {
   Route,
   BrowserRouter as Router,
+  Switch,
 } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
   <Router>
-    <Route exact path="/" component={App} />
-    <Route path="/home" component={Home} />
-    <Route path="/watchList" component={WatchList} />
-    <Route path="/tokenInput" component={TokenInput}/>
-    <Route component={Notfound} />
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/home" component={Home} />
+      <Route path="/watchList" component={WatchList} />
+      <Route path="/tokenInput" component={TokenInput} />
+      <Route path="*" component={Notfound} />
+    </Switch>
   </Router>
 );
 
-ReactDOM.render( routing, document.getElementById('root'));
+ReactDOM.render(routing, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
