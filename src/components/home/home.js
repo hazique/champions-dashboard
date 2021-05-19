@@ -20,6 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocalActivityIcon from '@material-ui/icons/LocalActivity';
 import InputBase from '@material-ui/core/InputBase';
+import ChampionsGallery from '../champions-gallery/champions-gallery';
 
 const drawerWidth = 240;
 
@@ -251,6 +252,7 @@ export default function Home() {
           nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
           accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
+        <ChampionsGallery></ChampionsGallery>
       </main>
     </div>
   );
