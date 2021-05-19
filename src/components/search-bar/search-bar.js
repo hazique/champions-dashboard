@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button, FormControl, InputGroup } from 'react-bootstrap';
+
 
 export default class SearchBar extends React.PureComponent {
   constructor(props) {
@@ -11,7 +13,15 @@ export default class SearchBar extends React.PureComponent {
   render() {
     return (
       <div>
-        <h1>This is the search bar</h1>
+        <InputGroup size="sm" className="mb-3">
+          <FormControl id="apiKey"
+              placeholder="Search Champions"
+              aria-label="Search Champions"/>
+          <InputGroup.Append>
+              <Button variant="outline-secondary" color="primary" onClick={this.onSubmit}>Search
+              </Button>
+          </InputGroup.Append>
+        </InputGroup>
       </div>
     );
   }

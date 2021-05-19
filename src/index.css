@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.token-input {
+  position: relative;
+  margin: auto;
+  width: 550px;
+  margin-top: 30vh;
+}

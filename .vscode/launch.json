@@ -11,6 +11,13 @@
             "url": "http://localhost:3000",
             // "port": 9222,
             "webRoot": "${workspaceFolder}/src"
+        },
+        {
+            "name": "Debug in Code",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}/src"
         }
     ]
 }

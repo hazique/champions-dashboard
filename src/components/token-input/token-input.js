@@ -1,4 +1,6 @@
 import React from 'react';
+import { Container, Button, Col, FormControl, InputGroup, Row } from 'react-bootstrap';
+
 
 export default class TokenInput extends React.PureComponent {
     state = {
@@ -6,7 +8,7 @@ export default class TokenInput extends React.PureComponent {
     };
     
     onSubmit = async (e) => {
-        const token = e.target.previousSibling.value;
+        const token = document.getElementById('apiKey').value;
         localStorage.setItem("apiToken", token);
 
         // TODO: Check if the URL after appending token input is correct
@@ -19,15 +21,13 @@ export default class TokenInput extends React.PureComponent {
         const response = await fetch(url);
         console.log('hello');
         const json = await response.json();
-        console.log('hello11', json);
         if (json && json !== undefined && !json.error){
             this.setState({ isError: false });
-            // this.props.history.push("/home");
+            this.props.history.push("/home");
             return true;
         }
         else {
             this.setState({ isError: true });
-            console.log('hello13333');
             return false;
         }
     }
@@ -35,10 +35,28 @@ export default class TokenInput extends React.PureComponent {
     render() {
         const { isError } = this.state;
         return (
-            <div>
-                <input id="inputBar" type="text" />
+            <div className="token-input">
+                {/* <input id="inputBar" type="text" />
                 <input id="" type="button" value="Submit" onClick={this.onSubmit} />
-                {isError ? <div>heelo</div> : <div>heel122121o</div>}
+                {isError ? <div>heelo</div> : <div>heel122121o</div>} */}
+
+                <Container fluid="sm">
+                    <Row>
+                        <Col>
+                            <InputGroup size="sm" className="mb-3">
+                                <FormControl id="apiKey"
+                                    placeholder="Enter API Key"
+                                    aria-label="Enter API Key"/>
+                                <InputGroup.Append>
+                                    <Button variant="outline-secondary" color="primary" onClick={this.onSubmit}>Save
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            {isError ? <div>heelo</div> : <div>heel122121o</div>}
+                        </Col>
+                    </Row>
+
+                </Container>
                 
             </div> 
         );

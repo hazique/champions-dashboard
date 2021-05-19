@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import TokenInput from './components/token-input/token-input';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 export default class App extends React.Component {
 
   constructor(props) {
