@@ -13,7 +13,7 @@ export default class TokenInput extends React.PureComponent {
 
         // TODO: Check if the URL after appending token input is correct
         const url = "https://api.pandascore.co/lol/champions?token=" + token;
-        let response = await this.checkToken(url);
+        let response = this.checkToken(url);
         console.log('abc', this.checkToken(url), response);
     }
 

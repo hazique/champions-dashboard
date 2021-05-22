@@ -5,7 +5,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import StarIcon from '@material-ui/icons/Star';
+import RemoveIcon from '@material-ui/icons/Remove';
 import tileData from './titleData';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: 500,
-    height: 450,
+    width: 'auto',
+    height: 'auto',
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -42,8 +43,20 @@ const useStyles = makeStyles((theme) => ({
  *   },
  * ];
  */
-export default function ChampionsGallery() {
+export default function ChampionsGallery(props) {
+
+  
   const classes = useStyles();
+
+  const removeFavourite = function (event){
+    console.log("Favourite removed");
+  }
+
+  const addFavourite = function (event){
+    console.log("Favourite added");
+  }
+
+  const {isFavourite, players} = props;
 
   return (
     <div className={classes.root}>
@@ -54,15 +67,27 @@ export default function ChampionsGallery() {
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>
             <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              subtitle={<span>by: Test author</span>}
-              actionIcon={
-                <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
+            { isFavourite
+              ? <GridListTileBar
+                title={tile.title}
+                subtitle={<span>by: Test author</span>}
+                actionIcon={
+                  <IconButton aria-label={`info about ${tile.title}`} className={classes.icon} onClick={removeFavourite}>
+                    <RemoveIcon />
+                  </IconButton>
+                }
+              />
+              : <GridListTileBar
+                title={tile.title}
+                subtitle={<span>by: Test author</span>}
+                actionIcon={
+                  <IconButton aria-label={`info about ${tile.title}`} className={classes.icon} onClick={addFavourite}>
+                    <StarIcon />
+                  </IconButton>
+                }
+              />
+
+            }
           </GridListTile>
         ))}
       </GridList>
