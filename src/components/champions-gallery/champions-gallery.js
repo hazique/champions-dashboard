@@ -7,7 +7,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import StarIcon from '@material-ui/icons/Star';
 import RemoveIcon from '@material-ui/icons/Remove';
-import tileData from './titleData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,62 +25,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     img: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
 export default function ChampionsGallery(props) {
 
-  
   const classes = useStyles();
 
-  const removeFavourite = function (event){
-    console.log("Favourite removed");
+  const removeFavourite = function (player) {
+    parentCallback({
+      type: 'remove',
+      data: player
+    });
   }
 
-  const addFavourite = function (event){
-    console.log("Favourite added");
+  const addFavourite = function (player) {
+    parentCallback({
+      type: 'add',
+      player: player
+    });
   }
 
-  const {isFavourite, players} = props;
+  const { isFavourite, players, parentCallback } = props;
 
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">December</ListSubheader>
+          <ListSubheader component="div">Players</ListSubheader>
         </GridListTile>
-        {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+        {players.map((player) => (
+          <GridListTile key={player.image_url}>
+            <img src={player.current_team.image_url} alt={player.slug} />
             { isFavourite
               ? <GridListTileBar
-                title={tile.title}
-                subtitle={<span>by: Test author</span>}
+                title={player.name}
+                subtitle={<span>{player.slug}</span>}
                 actionIcon={
-                  <IconButton aria-label={`info about ${tile.title}`} className={classes.icon} onClick={removeFavourite}>
+                  <IconButton aria-label={`info about ${player.slug}`} className={classes.icon} onClick={removeFavourite}>
                     <RemoveIcon />
                   </IconButton>
                 }
               />
               : <GridListTileBar
-                title={tile.title}
-                subtitle={<span>by: Test author</span>}
+                title={player.name}
+                subtitle={<span>{player.slug}</span>}
                 actionIcon={
-                  <IconButton aria-label={`info about ${tile.title}`} className={classes.icon} onClick={addFavourite}>
+                  <IconButton aria-label={`info about ${player.slug}`} className={classes.icon} onClick={()=> addFavourite(player)}>
                     <StarIcon />
                   </IconButton>
                 }

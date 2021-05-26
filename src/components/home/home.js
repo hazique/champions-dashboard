@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme, fade } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -147,21 +147,16 @@ const useStyles = makeStyles((theme) => ({
 
 let cachedPlayers = [];
 
-const getPlayers = async function(pageNum) {
-
-  const response = await fetch(`https://api.pandascore.co/players?page=${pageNum}&token=IfNl9G6_nDG9bYtcfEwkYbYN6DRnOqTY80o-CKTqxrQMuawOEiE`);
-  const players = await response.json();
-  cachedPlayers = [...players, ...cachedPlayers];
-  return cachedPlayers;
-}
-  
-
 export default function Home() {
 
   const [pageNum, setPageNum] = useState(1);
-  const [players, setPlayers] = useState( getPlayers(pageNum) );
   const [currentTab, setCurrentTab] = useState('Champions');
+  const [players, setPlayers] = useState(cachedPlayers);
+  const getFavsFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem('fav_champions'));
+  }
 
+  const [favourites, setFavourites] = useState(getFavsFromLocalStorage() || []);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -178,7 +173,37 @@ export default function Home() {
     setCurrentTab(tabName);
   };
 
-  console.log(players);
+  const saveFavsToLocalStorage = () => {
+    localStorage.setItem('fav_champions', JSON.stringify(favourites));
+  };
+
+  const modifyFavourite = (data) => {
+    if (data.type === 'add') {
+      setFavourites([...favourites, data.player]);
+      saveFavsToLocalStorage();
+    }
+    else {
+      const newFavs = favourites.filter(player => player.id != data.player.id);
+      setFavourites(newFavs);
+      saveFavsToLocalStorage();
+    }
+
+  };
+
+  useEffect( ()=>{
+    async function fetchPlayersByPageNum(pageNum) {
+  
+      const response = await fetch(`https://api.pandascore.co/players?page=${pageNum}&token=IfNl9G6_nDG9bYtcfEwkYbYN6DRnOqTY80o-CKTqxrQMuawOEiE`);
+      const data = await response.json();
+      cachedPlayers = [...data, ...cachedPlayers];
+      setPlayers(cachedPlayers);
+    }
+    if(currentTab === 'Champions')
+      fetchPlayersByPageNum(pageNum);
+
+    
+    console.log("Current tab is: ", currentTab);
+  }, [pageNum, currentTab]);
 
   return (
     <div className={classes.root}>
@@ -254,8 +279,8 @@ export default function Home() {
 
         {
           currentTab === 'Champions'
-          ? <ChampionsGallery players={players}/>
-          : <ChampionsGallery isFavourite />
+          ? <ChampionsGallery players={players} parentCallback={modifyFavourite}/>
+          : <ChampionsGallery isFavourite players={favourites}/>
         }
         
       </main>
