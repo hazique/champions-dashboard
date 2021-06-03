@@ -190,7 +190,7 @@ export default function Home() {
 
   };
 
-  useEffect( ()=>{
+  useEffect( ()=>{// if a function is returned then it serves the component unmount lifecycle method
     async function fetchPlayersByPageNum(pageNum) {
   
       const response = await fetch(`https://api.pandascore.co/players?page=${pageNum}&token=IfNl9G6_nDG9bYtcfEwkYbYN6DRnOqTY80o-CKTqxrQMuawOEiE`);
