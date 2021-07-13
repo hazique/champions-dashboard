@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const playerImgUrl = "./static/player.png";
+
 export default function ChampionsGallery(props) {
 
   const classes = useStyles();
@@ -52,8 +54,9 @@ export default function ChampionsGallery(props) {
           <ListSubheader component="div">Players</ListSubheader>
         </GridListTile>
         {players.map((player) => (
-          <GridListTile key={player.image_url}>
-            <img src={player.current_team.image_url} alt={player.slug} />
+          <GridListTile key={player.id}>
+            {/* <img src={player.current_team.image_url ?? player.image_url ?? playerImgUrl } alt={player.slug} /> */}
+            <img src={ playerImgUrl } alt={player.slug} />
             { isFavourite
               ? <GridListTileBar
                 title={player.name}

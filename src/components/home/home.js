@@ -145,12 +145,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let cachedPlayers = [];
-
 export default function Home() {
 
   const [pageNum, setPageNum] = useState(1);
   const [currentTab, setCurrentTab] = useState('Champions');
+
+  const [cachedPlayers, setCachedPlayers] = useState([]);
   const [players, setPlayers] = useState(cachedPlayers);
   const getFavsFromLocalStorage = () => {
     return JSON.parse(localStorage.getItem('fav_champions'));
@@ -183,7 +183,7 @@ export default function Home() {
       saveFavsToLocalStorage();
     }
     else {
-      const newFavs = favourites.filter(player => player.id != data.player.id);
+      const newFavs = favourites.filter(player => player.id !== data.player.id);
       setFavourites(newFavs);
       saveFavsToLocalStorage();
     }
@@ -195,15 +195,15 @@ export default function Home() {
   
       const response = await fetch(`https://api.pandascore.co/players?page=${pageNum}&token=IfNl9G6_nDG9bYtcfEwkYbYN6DRnOqTY80o-CKTqxrQMuawOEiE`);
       const data = await response.json();
-      cachedPlayers = [...data, ...cachedPlayers];
+      const currentCache = [...cachedPlayers];
+      setCachedPlayers([...data, ...currentCache]);
       setPlayers(cachedPlayers);
     }
     if(currentTab === 'Champions')
       fetchPlayersByPageNum(pageNum);
 
-    
     console.log("Current tab is: ", currentTab);
-  }, [pageNum, currentTab]);
+  }, [pageNum, currentTab, cachedPlayers]);
 
   return (
     <div className={classes.root}>
