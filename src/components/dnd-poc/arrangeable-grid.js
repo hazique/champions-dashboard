@@ -3,7 +3,8 @@ import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 
 import { makeStyles } from '@material-ui/core/styles';
-import '../../dnd-poc.css';
+
+import Project from './project';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,82 +76,12 @@ const itemData = [
 
 export default function ArrangeableGrid(props) {
 
-  const demoTasks = [{ name: "Learn Angular", category: "wip", bgcolor: "yellow" },
-  { name: "React", category: "wip", bgcolor: "pink" },
-  { name: "Vue", category: "complete", bgcolor: "skyblue" }
-  ];
-
-  const [tasks, setTasks] = useState(demoTasks);
-
-  let categorisedTasks = {
-    wip: [],
-    complete: []
-  }
-
-  tasks.forEach((t) => {
-    categorisedTasks[t.category].push(
-      <div key={t.name}
-        onDragStart={(e) => onDragStart(e, t.name)}
-        draggable
-        className="draggable"
-        style={{ backgroundColor: t.bgcolor }}
-      >
-        {t.name}
-      </div>
-    );
-  });
-
   const classes = useStyles();
-
-  const onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
-    ev.dataTransfer.setData("id", id);
-  }
-
-  const onDragOver = (ev) => {
-    ev.preventDefault();
-  }
-
-  const onDrop = (ev, cat) => {
-    const id = ev.dataTransfer.getData("id");
-
-    const recategorisedTasks = tasks.filter((task) => {
-      if (task.name == id) {
-        task.category = cat;
-      }
-      return task;
-    });
-
-    setTasks(recategorisedTasks);
-  }
 
   return (
     <div className={classes.root} >
-      {/* <div className="container-drag">
-        <h2 className="header">DRAG & DROP DEMO</h2>
-        <div className="wip" onDragOver={(e) => onDragOver(e)} onDrop={(e) => { onDrop(e, "wip") }}>
-          <span className="task-header">WIP</span>
-          {categorisedTasks.wip}
-        </div>
-        <div className="droppable" onDragOver={(e) => onDragOver(e)} onDrop={(e) => onDrop(e, "complete")}>
-          <span className="task-header">COMPLETED</span>
-          {categorisedTasks.complete}
-        </div>
-      </div> */}
 
-      <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-      {itemData.map((item) => (
-        <ImageListItem key={item.img}>
-          <img
-            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format 1x,
-                ${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
-
+      {/* <Project /> */}
 
     </div>
   );

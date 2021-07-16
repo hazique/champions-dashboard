@@ -7,6 +7,7 @@ import Home from './components/home/home';
 import WatchList from './components/watch-list/watch-list';
 import TokenInput from './components/token-input/token-input';
 import Notfound from './components/not-found/not-found';
+import AxiosSetup from './components/dnd-poc/axiosSetup';
 
 import {
   Route,
@@ -14,7 +15,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import DndPOC from './components/dnd-poc/dnd-poc';
+// import DndPOC from './components/dnd-poc/dnd-poc';
 import ArrangeableGrid from './components/dnd-poc/arrangeable-grid';
 
 import * as serviceWorker from './serviceWorker';
@@ -26,9 +27,11 @@ const routing = (
       <Route path="/home" component={Home} />
       <Route path="/watchList" component={WatchList} />
       <Route path="/tokenInput" component={TokenInput} />
-      <Route path="/dnd-poc" component={DndPOC} />
-      <Route path="/arrangeable-grid" component={ArrangeableGrid} />
+      {/* <Route path="/dnd-poc" component={DndPOC} /> */}
+      {/* <Route path="/arrangeable-grid" component={ArrangeableGrid} /> */}
+      <Route path="/axios" component={AxiosSetup} />
       <Route path="*" component={Notfound} />
+      
     </Switch>
   </Router>
 );

@@ -37,7 +37,7 @@ export default function DndPOC(props) {
     categorisedTasks[t.category].push(
       <div key={t.name}
         onDragStart={(e) => onDragStart(e, t.name)}
-        onTouchStart={(e) => onDragStart(e, t.name)}
+        onTouchStart={(e) => onTouchStart(e, t.name)}
         draggable
         className="draggable"
         style={{ backgroundColor: t.bgcolor }}
@@ -54,11 +54,35 @@ export default function DndPOC(props) {
     ev.dataTransfer.setData("id", id);
   }
 
+  const onTouchStart = (ev, id) => {
+    console.log('dragstart:', id);
+    const dataTransfer = new DataTransfer();
+    dataTransfer.setData("id", id);
+    ev['dataTransfer'] = dataTransfer;
+  }
+
   const onDragOver = (ev) => {
     ev.preventDefault();
   }
 
+  const onTouchMove = (ev) => {
+    // ev.preventDefault();
+  }
+
   const onDrop = (ev, cat) => {
+    const id = ev.dataTransfer.getData("id");
+
+    const recategorisedTasks = tasks.filter((task) => {
+      if (task.name == id) {
+        task.category = cat;
+      }
+      return task;
+    });
+
+    setTasks(recategorisedTasks);
+  }
+
+  const onTouchEnd = (ev, cat) => {
     const id = ev.dataTransfer.getData("id");
 
     const recategorisedTasks = tasks.filter((task) => {
@@ -76,9 +100,9 @@ export default function DndPOC(props) {
       <div className="container-drag">
         <h2 className="header">DRAG & DROP DEMO</h2>
         <div className="wip" onDragOver={(e) => onDragOver(e)}
-          onTouchMove={(e) => onDragOver(e)}
+          onTouchMove={(e) => onTouchMove(e)}
           onDrop={(e) => { onDrop(e, "wip") }}
-          onTouchEnd={(e) => { onDrop(e, "wip") }}
+          onTouchEnd={(e) => { onTouchEnd(e, "wip") }}
         >
           <span className="task-header">WIP</span>
           {categorisedTasks.wip}
@@ -86,7 +110,7 @@ export default function DndPOC(props) {
         <div className="droppable" onDragOver={(e) => onDragOver(e)}
           onDragMove={(e) => onDragOver(e)} 
           onDrop={(e) => onDrop(e, "complete")}
-          onTouchEnd={(e) => onDrop(e, "complete")}
+          onTouchEnd={(e) => onTouchEnd(e, "complete")}
         >
           <span className="task-header">COMPLETED</span>
           {categorisedTasks.complete}
