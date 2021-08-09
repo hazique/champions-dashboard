@@ -9,6 +9,8 @@ import TokenInput from './components/token-input/token-input';
 import Notfound from './components/not-found/not-found';
 import AxiosSetup from './components/dnd-poc/axiosSetup';
 
+import ReactImageEditor from './components/react-image-editor/reactImageEditor';
+
 import {
   Route,
   BrowserRouter as Router,
@@ -30,6 +32,7 @@ const routing = (
       {/* <Route path="/dnd-poc" component={DndPOC} /> */}
       {/* <Route path="/arrangeable-grid" component={ArrangeableGrid} /> */}
       <Route path="/axios" component={AxiosSetup} />
+      <Route path="/image-editor" component={ReactImageEditor} />
       <Route path="*" component={Notfound} />
       
     </Switch>
