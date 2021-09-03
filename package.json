@@ -8,7 +8,7 @@
     "array-move": "^3.0.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
-    "immer": "^1.10.0",
+    "immer": "^9.0.6",
     "react": "^16.12.0",
     "react-bootstrap": "^1.5.0",
     "react-darkroom": "^0.3.7",
